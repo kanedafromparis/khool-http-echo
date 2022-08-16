@@ -1,0 +1,14 @@
+<web-app>
+
+    <servlet>
+        <servlet-name>echoServlet</servlet-name>
+        <servlet-class>io.github.kandefromparis.khool.EchoServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>echoServlet</servlet-name>
+        <url-pattern>/echoServlet</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>
