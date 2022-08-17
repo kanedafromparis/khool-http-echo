@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Path;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-//@Path("/echoservlet")
+// Path is define in resources/META-INF/web.xml
 public class EchoServlet extends HttpServlet {
     static final Logger log = Logger.getLogger("EchoServlet");
     public static final String MESSAGE = "message";
@@ -32,7 +33,7 @@ public class EchoServlet extends HttpServlet {
         StringBuilder sb = new StringBuilder();
         sb.append("Headers:\n");
 
-        extractedHeaders(req, sb);
+        Collections.list(req.getHeaderNames()).forEach(name -> {sb.append("\t").append(name).append(" : ").append(req.getParameter(name)).append("\n");});
         sb.append("\n");
         sb.append("Method:").append(req.getMethod()).append("\n");
         sb.append("\n");
@@ -40,7 +41,7 @@ public class EchoServlet extends HttpServlet {
         sb.append("URI:").append(req.getRequestURI()).append("\n");
         sb.append("\n");
         sb.append("Parameters : \n");
-        extractedParameters(req, sb);
+        Collections.list(req.getParameterNames()).forEach(name -> {sb.append("\t").append(name).append(" : ").append(req.getParameter(name)).append("\n");});
         sb.append("\n");
         sb.append("Body:").append(req.getReader().lines().collect(Collectors.joining())).append("\n");
 
@@ -53,23 +54,33 @@ public class EchoServlet extends HttpServlet {
         writer.close();
     }
 
-    private void extractedHeaders(HttpServletRequest req, StringBuilder sb) {
-        Enumeration<String> names = req.getHeaderNames();
-        while (names.hasMoreElements()){
-            String name = names.nextElement();
-            sb.append("\t").append(name).append(" : ").append(req.getHeader(name)).append("\n");
-        }
-    }
-
-    private void extractedParameters(HttpServletRequest req, StringBuilder sb) {
-        Enumeration<String> names = req.getParameterNames();
-        while (names.hasMoreElements()){
-            String name = names.nextElement();
-            sb.append("\t").append(name).append(" : ").append(req.getParameter(name)).append("\n");
-        }
-    }
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
+    }
+
+    @Override
+    protected void doHead(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
+    }
+
+    @Override
+    protected void doTrace(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
     }
 }

@@ -28,5 +28,30 @@ public class EchoServletTest {
                 .body(containsString("toto : 3232"));
     }
 
+    @Test
+    public void testPutEndpoint() {
+        given()
+                .when().put("/echoServlet?toto=3232&titi=erere")
+                .then()
+                .statusCode(200)
+                .body(containsString("Method:PUT"))
+                .body(containsString("toto : 3232"));
+    }
+    @Test
+    public void testHeadEndpoint() {
+        given()
+                .when().head("/echoServlet?toto=3232&titi=erere")
+                .then()
+                .statusCode(200);
+    }
 
+    @Test
+    public void testDeleteEndpoint() {
+        given()
+                .when().delete("/echoServlet?toto=3232&titi=erere")
+                .then()
+                .statusCode(200)
+                .body(containsString("Method:DELETE"))
+                .body(containsString("toto : 3232"));
+    }
 }
